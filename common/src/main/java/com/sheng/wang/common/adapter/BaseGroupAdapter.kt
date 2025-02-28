@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.sheng.wang.common.helper.MetricsHelper
+import com.sheng.wang.common.helper.getWidth
 
 /**
  * adapter base only LinearLayout
@@ -113,7 +113,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
                         val params = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                         )
-                        params.width = MetricsHelper.getWidth(mContext, mOffset, sizeNum)
+                        params.width = mContext.getWidth(mOffset, sizeNum)
                         itemParent.addView(holder.mView, params)
                         j++
                     }
@@ -133,7 +133,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
                         val params = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                         )
-                        params.width = MetricsHelper.getWidth(mContext, mOffset, mNum)
+                        params.width = mContext.getWidth(mOffset, mNum)
                         itemParent.addView(holder.mView, params)
                         linearLayout.addView(itemParent)
                     } else {
