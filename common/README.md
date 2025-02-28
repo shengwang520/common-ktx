@@ -10,10 +10,10 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:common-ktx:1.0.01'
+* api 'com.github.shengwang520:common-ktx:1.0.02'
 
 ## Changelog
 
-### Version 1.0.01
+### Version 1.0.02
 
 * 通用工具-ktx实现
