@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 
-/**
- * 基础自定义组件
- */
-abstract class BaseCustomView @JvmOverloads constructor(context: Context,
+
+abstract class BaseCustomView @JvmOverloads constructor(
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), ICustomView {
@@ -30,21 +29,15 @@ abstract class BaseCustomView @JvmOverloads constructor(context: Context,
     override fun initListener() {
     }
 
-    /**
-     * 生命周期
-     */
+
     open fun resume() {
     }
 
-    /**
-     * 暂停
-     */
+
     open fun pause() {
     }
 
-    /**
-     * 释放资源
-     */
+
     open fun destroy() {
     }
 

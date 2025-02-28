@@ -8,7 +8,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
 /**
- * 上层holder
+ * base holder
  */
 abstract class BaseViewItemHolder<M>(var mView: View) {
     var context: Context = mView.context

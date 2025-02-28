@@ -22,22 +22,22 @@ import com.sheng.wang.common.helper.getNavigationBarHeight
 import java.lang.ref.WeakReference
 
 /**
- * 相机权限
+ * camera permission
  */
 const val CAMERA = Manifest.permission.CAMERA
 
 /**
- * 录音权限
+ * record audio permission
  */
 const val RECORD_AUDIO = Manifest.permission.RECORD_AUDIO
 
 /**
- * 相机、录音权限
+ * camera record audio permission
  */
 val CAMERA_AUDIO = arrayOf(CAMERA, RECORD_AUDIO)
 
 /**
- * 媒体文件阅读权限（图片/视频）
+ * media permission（images/video）
  */
 val READ_MEDIA_IMAGES_VIDEO = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
     arrayOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO)
@@ -46,7 +46,7 @@ val READ_MEDIA_IMAGES_VIDEO = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.T
 }
 
 /**
- * 图片阅读权限
+ * images permission
  */
 val READ_MEDIA_IMAGES = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
     Manifest.permission.READ_MEDIA_IMAGES
@@ -55,7 +55,7 @@ val READ_MEDIA_IMAGES = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMIS
 }
 
 /**
- * 音频阅读权限
+ * audio permission
  */
 val READ_MEDIA_AUDIO = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
     Manifest.permission.READ_MEDIA_AUDIO
@@ -64,27 +64,29 @@ val READ_MEDIA_AUDIO = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 }
 
 /**
- * 通知权限-13+才能直接申请
+ * notification permission-13+
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 val POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 
 /**
- * 权限同意统一回调
+ * permission onGranted
  */
 var onPermissionGranted: WeakReference<(() -> Unit)>? = null
 
 /**
- * 权限拒绝统一回调-返回true表示自己实现拦截后的逻辑，false使用默认实现
+ * permission onDenied
+ *
+ * * return true intercept oneself achieve,false use default achieve
  */
 var onPermissionDenied: WeakReference<(() -> Boolean)>? = null
 
 
 /**
- * 请求单个权限-基于BaseActivity实现
- * @param permission 要申请的权限
- * @param onGranted 同意
- * @param onDenied 拒绝
+ * request one permission-BaseActivity
+ * @param permission permission
+ * @param onGranted onGranted
+ * @param onDenied onDenied
  */
 fun Context?.requestPermission(
     permission: String?,
@@ -101,10 +103,10 @@ fun Context?.requestPermission(
 }
 
 /**
- * 请求多个权限-基于BaseActivity实现
- * @param permissions 要申请的一组权限
- * @param onGranted 同意
- * @param onDenied 同意
+ * request more permission-BaseActivity
+ * @param permissions permissions
+ * @param onGranted onGranted
+ * @param onDenied onDenied
  */
 fun Context?.requestPermissions(
     permissions: Array<String>?,
@@ -121,9 +123,9 @@ fun Context?.requestPermissions(
 }
 
 /**
- * 请求单个权限
- * @param onGranted 已授权
- * @param onDenied 已拒绝
+ * request one permission
+ * @param onGranted onGranted
+ * @param onDenied onDenied
  */
 fun ActivityResultCaller.registerPermissionLaunch(
     onGranted: () -> Unit,
@@ -144,9 +146,9 @@ fun ActivityResultCaller.registerPermissionLaunch(
 }
 
 /**
- * 请求单个权限
- * @param onGranted 已授权
- * @param onDenied 已拒绝
+ * request more permission
+ * @param onGranted onGranted
+ * @param onDenied onDenied
  */
 fun ActivityResultCaller.registerPermissionsLaunch(
     onGranted: () -> Unit,
@@ -167,7 +169,7 @@ fun ActivityResultCaller.registerPermissionsLaunch(
 }
 
 /**
- * 显示权限被拒绝弹窗
+ * show onDenied view
  */
 private fun FragmentActivity?.showDeniedView() {
     this?.let {
@@ -183,8 +185,8 @@ private fun FragmentActivity?.showDeniedView() {
 
 
 /**
- * 判断是否有悬浮窗权限
- * @return true 有权限 false 无权限
+ * check window permission
+ * @return true have ,false not have
  */
 fun Context?.isWindowPermission(): Boolean {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -194,9 +196,9 @@ fun Context?.isWindowPermission(): Boolean {
 }
 
 /**
- * 检查是否拥有权限
- * @param permission 需要判断的权限
- * @return true有 ，false没有
+ * check is permission
+ * @param permission permission
+ * @return true have ，false not have
  */
 fun Context?.isCheckPermission(permission: String): Boolean {
     this?.let {
@@ -206,7 +208,7 @@ fun Context?.isCheckPermission(permission: String): Boolean {
 }
 
 /**
- * 启动手机app权限设置界面
+ * start app permission setting page
  */
 fun Context?.startSettingPermission() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -215,7 +217,7 @@ fun Context?.startSettingPermission() {
 }
 
 /**
- * 启动手机app悬浮窗权限设置界面
+ * start app window permission setting page
  */
 fun Context?.startSettingWindow() {
     val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -229,7 +231,7 @@ fun Context?.startSettingWindow() {
 }
 
 /**
- * 启动手机设置wifi
+ * start app wifi setting page
  */
 fun Context?.startSettingWifi() {
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {

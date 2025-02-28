@@ -8,9 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 
-/**
- * 基础自定义布局-添加LifecycleOwner环境
- */
+
 abstract class BaseLifecycleView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -51,16 +49,10 @@ abstract class BaseLifecycleView @JvmOverloads constructor(
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
     }
 
-    /**
-     * 初始化数据观察注册
-     */
     open fun initViewModel() {
 
     }
 
-    /**
-     * 播放动画
-     */
     open fun startAnim(@AnimRes animId: Int) {
         val showAnim = AnimationUtils.loadAnimation(context, animId)
         startAnimation(showAnim)

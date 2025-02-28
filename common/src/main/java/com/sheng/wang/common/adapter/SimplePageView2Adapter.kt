@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 /**
- * viewPager2 fragment适配器
+ * viewPager2 fragment adapter
  */
 class SimplePageView2Adapter(fragmentActivity: FragmentActivity, private val fragments: List<Fragment>) : FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {

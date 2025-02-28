@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 
 /**
- * viewPager view 适配器
+ * viewPager view adapter
  */
 open class BasePagerAdapter<T : View>(private val views: List<T>) : PagerAdapter() {
     override fun getCount(): Int {

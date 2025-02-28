@@ -30,7 +30,6 @@ object StringUtil {
             } else {
                 val spannableString = SpannableString(textString.text)
                 if (textString.onClickListener != null) {
-                    //设置部分文字点击事件
                     val clickableSpan: ClickableSpan = object : ClickableSpan() {
                         override fun onClick(widget: View) {
                             textString.onClickListener?.onClick(widget)

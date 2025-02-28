@@ -2,20 +2,18 @@ package com.sheng.wang.common.helper
 
 import android.content.Context
 import android.media.MediaPlayer
-import java.io.IOException
 
 /**
- * 声音播放器
+ * voice playHelper
  */
-class VoicePlayHelper private constructor() {
+object VoicePlayHelper {
 
     private var mPlayer: MediaPlayer? = null
 
     /**
-     * 播放声音
+     * play raw mp3
      */
-    @JvmOverloads
-    fun playFromRawFile(mContext: Context, id: Int, isLoop: Boolean = false) {
+    fun playRaw(mContext: Context, id: Int, isLoop: Boolean = false) {
         stopPlay()
         try {
             mPlayer = MediaPlayer()
@@ -32,28 +30,11 @@ class VoicePlayHelper private constructor() {
     }
 
     /**
-     * 播放音频，本地或远端
-     */
-    @JvmOverloads
-    fun playUrl(url: String?, onCompletionListener: MediaPlayer.OnCompletionListener? = null, onInfoListener: MediaPlayer.OnInfoListener? = null) {
-        try {
-            mPlayer = MediaPlayer()
-            mPlayer?.setOnCompletionListener(onCompletionListener)
-            mPlayer?.setOnInfoListener(onInfoListener)
-            mPlayer?.setDataSource(url)
-            mPlayer?.prepare()
-            mPlayer?.start()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    /**
-     * 结束播放来
+     * stop play
      */
     fun stopPlay() {
         try {
-            if (mPlayer != null && mPlayer!!.isPlaying) {
+            if (mPlayer != null && isPlaying) {
                 mPlayer?.stop()
                 mPlayer?.release()
             }
@@ -67,20 +48,6 @@ class VoicePlayHelper private constructor() {
      * 是否正在播放
      */
     private val isPlaying: Boolean
-        get() = if (mPlayer == null) false else mPlayer!!.isPlaying
+        get() = mPlayer?.isPlaying == true
 
-    companion object {
-        var instance: VoicePlayHelper? = null
-            get() {
-                if (field == null) {
-                    synchronized(VoicePlayHelper::class.java) {
-                        if (null == field) {
-                            field = VoicePlayHelper()
-                        }
-                    }
-                }
-                return field
-            }
-            private set
-    }
 }

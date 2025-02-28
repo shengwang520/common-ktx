@@ -6,11 +6,11 @@ import android.view.Gravity
 import android.widget.Toast
 
 /**
- * toast工具
+ * toast
  */
 object ToastUtils {
     /**
-     * 显示
+     * show
      */
     fun show(context: Context?, resId: Int) {
         if (context == null) return
@@ -20,9 +20,8 @@ object ToastUtils {
     }
 
     /**
-     * 显示
+     * show
      */
-    @JvmOverloads
     fun show(context: Context?, msg: String?, isCenter: Boolean = false) {
         if (context == null) return
         if (TextUtils.isEmpty(msg)) return

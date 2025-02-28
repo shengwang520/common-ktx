@@ -4,58 +4,37 @@ import android.util.Log
 import android.view.Window
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 
 /**
- * 开启安卓全屏适配
+ * open full window
  */
-fun FragmentActivity.openWindowInsets() {
-    WindowCompat.setDecorFitsSystemWindows(window, false)//开启沉淀式 false开启，true关闭
+fun Window?.openWindowInsets() {
+    this?.let {
+        WindowCompat.setDecorFitsSystemWindows(it, false)//开启沉淀式 false开启，true关闭
+    }
 }
 
 /**
  * open full window
  */
-fun Window.openWindowInsets() {
-    WindowCompat.setDecorFitsSystemWindows(this, false)//开启沉淀式 false开启，true关闭
+fun FragmentActivity?.openWindowInsets() {
+    this?.window.openWindowInsets()
 }
 
 /**
- * 隐藏底部导航栏
+ * open full window
  */
-fun FragmentActivity.hideNavigationBars() {
-    WindowCompat.getInsetsController(window, window.decorView).apply {
-        hide(Type.navigationBars())
-        systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
+fun DialogFragment?.openWindowInsets() {
+    this?.dialog?.window.openWindowInsets()
 }
 
 /**
- * 设置顶部状态栏颜色
- * @param isDark true黑色，false白色
- */
-fun FragmentActivity.setStatusBarsColor(isDark: Boolean = false) {
-    WindowCompat.getInsetsController(window, window.decorView).apply {
-        isAppearanceLightStatusBars = isDark
-    }
-}
-
-/**
- * 设置导航栏图标颜色
- * @param isDark true黑色，false白色
- */
-fun FragmentActivity.setNavigationBarsColor(isDark: Boolean = false) {
-    WindowCompat.getInsetsController(window, window.decorView).apply {
-        isAppearanceLightNavigationBars = isDark
-    }
-}
-
-/**
- * 设置顶部状态栏颜色
- * @param isDark true黑色，false白色
+ * set statusBars color
+ * @param isDark true black，false white
  */
 fun Window?.setStatusBarsColor(isDark: Boolean = false) {
     this?.let {
@@ -63,12 +42,27 @@ fun Window?.setStatusBarsColor(isDark: Boolean = false) {
             isAppearanceLightStatusBars = isDark
         }
     }
-
 }
 
 /**
- * 设置导航栏图标颜色
- * @param isDark true黑色，false白色
+ * set statusBars color
+ * @param isDark true black，false white
+ */
+fun FragmentActivity?.setStatusBarsColor(isDark: Boolean = false) {
+    this?.window.setStatusBarsColor(isDark)
+}
+
+/**
+ * set statusBars color
+ * @param isDark true black，false white
+ */
+fun DialogFragment?.setStatusBarsColor(isDark: Boolean = false) {
+    this?.dialog?.window.setStatusBarsColor(isDark)
+}
+
+/**
+ * set navigationBars color
+ * @param isDark true black，false white
  */
 fun Window?.setNavigationBarsColor(isDark: Boolean = false) {
     this?.let {
@@ -79,11 +73,28 @@ fun Window?.setNavigationBarsColor(isDark: Boolean = false) {
 }
 
 /**
- * 获取页面状态栏，导航栏高度
- * @param bloc 返回状态栏，导航栏高度
+ * set navigationBars color
+ * @param isDark true black，false white
  */
-fun FragmentActivity.getSystemBarsHeight(bloc: (Int, Int) -> Unit) {
-    window.decorView.setOnApplyWindowInsetsListener { v, insets ->
+fun FragmentActivity?.setNavigationBarsColor(isDark: Boolean = false) {
+    this?.window.setNavigationBarsColor(isDark)
+}
+
+/**
+ * set navigationBars color
+ * @param isDark true black，false white
+ */
+fun DialogFragment?.setNavigationBarsColor(isDark: Boolean = false) {
+    this?.dialog?.window.setNavigationBarsColor(isDark)
+}
+
+/**
+ * get statusBar height,navigationBar height
+ * * activity only one times
+ * @param bloc return statusBar，navigation height
+ */
+fun FragmentActivity?.getSystemBarsHeight(bloc: (Int, Int) -> Unit) {
+    this?.window?.decorView?.setOnApplyWindowInsetsListener { v, insets ->
         ViewCompat.getRootWindowInsets(v)?.let {
             val statusBar = it.getInsets(Type.statusBars()).top
             val navigationBar = it.getInsets(Type.navigationBars()).bottom
@@ -97,7 +108,7 @@ fun FragmentActivity.getSystemBarsHeight(bloc: (Int, Int) -> Unit) {
 }
 
 /**
- * 获取状态栏高度-需要再activity渲染成功后调用
+ * get statusBar height-when activity is show
  */
 fun FragmentActivity?.getStatusBarHeight(): Int {
     this?.window?.let {
@@ -110,7 +121,7 @@ fun FragmentActivity?.getStatusBarHeight(): Int {
 }
 
 /**
- * 获取导航栏高度-需要再activity渲染成功后调用
+ * get navigationBar height-when activity is show
  */
 fun FragmentActivity?.getNavigationBarHeight(): Int {
     this?.window?.let {
@@ -123,13 +134,25 @@ fun FragmentActivity?.getNavigationBarHeight(): Int {
 }
 
 /**
+ * hide navigationBar
+ */
+fun FragmentActivity?.hideNavigationBars() {
+    this?.let {
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            hide(Type.navigationBars())
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+}
+
+/**
  * keyboard chang listener
  * @param bloc true open ,false close
  */
-fun FragmentActivity.setKeyboardListener(bloc: Boolean.() -> Unit) {
-    window.decorView.setOnApplyWindowInsetsListener { v, insets ->
+fun FragmentActivity?.setKeyboardListener(bloc: Boolean.() -> Unit) {
+    this?.window?.decorView?.setOnApplyWindowInsetsListener { v, insets ->
         ViewCompat.getRootWindowInsets(v)?.let {
-            val keyboardHeight = it.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            val keyboardHeight = it.getInsets(Type.ime()).bottom
             bloc(keyboardHeight > 0)
         }
         insets
@@ -139,10 +162,34 @@ fun FragmentActivity.setKeyboardListener(bloc: Boolean.() -> Unit) {
 /**
  * keyboard is show
  */
-fun FragmentActivity.isShowKeyboard(): Boolean {
-    ViewCompat.getRootWindowInsets(this.window.decorView)?.let {
-        val keyboardHeight = it.getInsets(WindowInsetsCompat.Type.ime()).bottom
-        return keyboardHeight > 0
+fun FragmentActivity?.isShowKeyboard(): Boolean {
+    this?.let {
+        ViewCompat.getRootWindowInsets(window.decorView)?.let {
+            val keyboardHeight = it.getInsets(Type.ime()).bottom
+            return keyboardHeight > 0
+        }
     }
     return false
+}
+
+/**
+ * show keyboard
+ */
+fun FragmentActivity?.showKeyboard() {
+    this?.let {
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            show(Type.ime())
+        }
+    }
+}
+
+/**
+ * hide keyboard
+ */
+fun FragmentActivity?.hideKeyboard() {
+    this?.let {
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            hide(Type.ime())
+        }
+    }
 }

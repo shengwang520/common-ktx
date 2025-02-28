@@ -5,22 +5,22 @@ import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import kotlin.math.abs
 
 /**
- * appBarLayout 展开，折叠状态监听
+ * appBarLayout expanded，listener
  */
 abstract class AppBarStateChangeListener : OnOffsetChangedListener {
     enum class State {
         /**
-         * 展开状态
+         * show
          */
         EXPANDED,
 
         /**
-         * 折叠状态
+         * hide
          */
         COLLAPSED,
 
         /**
-         * 中间状态
+         * middle
          */
         IDLE
     }
@@ -34,12 +34,14 @@ abstract class AppBarStateChangeListener : OnOffsetChangedListener {
                 }
                 State.EXPANDED
             }
+
             abs(i) >= appBarLayout.totalScrollRange -> {
                 if (mCurrentState != State.COLLAPSED) {
                     onStateChanged(appBarLayout, State.COLLAPSED)
                 }
                 State.COLLAPSED
             }
+
             else -> {
                 if (mCurrentState != State.IDLE) {
                     onStateChanged(appBarLayout, State.IDLE)

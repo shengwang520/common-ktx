@@ -5,10 +5,10 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.sheng.wang.common.utils.MetricsUtils
+import com.sheng.wang.common.helper.MetricsHelper
 
 /**
- * 目前只支持LinearLayout数据适配
+ * adapter base only LinearLayout
  */
 abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     viewGroup: LinearLayout, num: Int = 1
@@ -17,24 +17,24 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     private val mContext: Context
     private var mOffset = 0f
     private val mData: MutableList<T>
-    private var mNum: Int //默认为每行1条数据
+    private var mNum: Int
     private var mGravity = Gravity.START
-    private var isResetWidth = false //是否需要重新设置宽度
-    private var dividerId = 0 //分割线
-    private var beginning = true//分割线是否显示在开始
-    private var sizeNum: Int //每行按照多少数量计算
+    private var isResetWidth = false
+    private var dividerId = 0
+    private var beginning = true
+    private var sizeNum: Int
     var selectorHolder: BaseViewItemHolder<T>? = null
     private var mOnViewSelectedListener: OnViewSelectedListener? = null
 
     /**
-     * 是否需要重新设置宽度,再num=1时有效,默认不需要
+     * is reset width,when num=1 take effect ,default not take effect
      */
     fun setResetWidth(resetWidth: Boolean) {
         isResetWidth = resetWidth
     }
 
     /**
-     * 设置每一行的个数
+     * set num
      */
     fun setNum(num: Int) {
         mNum = num
@@ -42,21 +42,21 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     }
 
     /**
-     * 设置每一行
+     * set size num
      */
     fun setSizeNum(sizeNum: Int) {
         this.sizeNum = sizeNum
     }
 
     /**
-     * 设置布局内容显示位置
+     * set gravity
      */
     fun setGravity(gravity: Int) {
         mGravity = gravity
     }
 
     /**
-     * 设置分割线
+     * set divider
      */
     fun setDividerId(dividerId: Int, beginning: Boolean = true) {
         this.dividerId = dividerId
@@ -64,7 +64,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     }
 
     /**
-     * 设置偏移量(dp)
+     * set offset(dp)
      */
     fun setOffset(offset: Float) {
         mOffset = offset
@@ -83,7 +83,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     }
 
     /**
-     * 刷新界面
+     * notify data
      */
     fun notifyDataSetChanged() {
         changFrameLayoutViews(mViewGroup)
@@ -113,7 +113,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
                         val params = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                         )
-                        params.width = MetricsUtils.getWidth(mContext, mOffset, sizeNum)
+                        params.width = MetricsHelper.getWidth(mContext, mOffset, sizeNum)
                         itemParent.addView(holder.mView, params)
                         j++
                     }
@@ -133,7 +133,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
                         val params = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                         )
-                        params.width = MetricsUtils.getWidth(mContext, mOffset, mNum)
+                        params.width = MetricsHelper.getWidth(mContext, mOffset, mNum)
                         itemParent.addView(holder.mView, params)
                         linearLayout.addView(itemParent)
                     } else {

@@ -5,12 +5,10 @@ import androidx.viewpager2.widget.ViewPager2
 import java.lang.reflect.Field
 
 /**
- * ViewPager2修改
+ * ViewPager2
  */
 object ViewPager2Utils {
-    /**
-     * 修改灵敏度
-     */
+
     fun changeTouchSlop(viewPager: ViewPager2, value: Int = 8) {
         try {
             val recyclerViewField: Field = ViewPager2::class.java.getDeclaredField("mRecyclerView")
