@@ -89,6 +89,26 @@ fun DialogFragment?.setNavigationBarsColor(isDark: Boolean = false) {
 }
 
 /**
+ * set systemBars color
+ * @param isStatusBar statusBar true black，false white
+ * @param isNavigationBar navigationBar true black，false white
+ */
+fun FragmentActivity?.setSystemBarsColor(isStatusBar: Boolean = false, isNavigationBar: Boolean = false) {
+    this?.window.setStatusBarsColor(isStatusBar)
+    this?.window.setNavigationBarsColor(isNavigationBar)
+}
+
+/**
+ * set systemBars color
+ * @param isStatusBar statusBar true black，false white
+ * @param isNavigationBar navigationBar true black，false white
+ */
+fun DialogFragment?.setSystemBarsColor(isStatusBar: Boolean = false, isNavigationBar: Boolean = false) {
+    this?.dialog?.window.setStatusBarsColor(isStatusBar)
+    this?.dialog?.window.setNavigationBarsColor(isNavigationBar)
+}
+
+/**
  * get statusBar height,navigationBar height
  * * activity only one times
  * @param bloc return statusBar，navigation height

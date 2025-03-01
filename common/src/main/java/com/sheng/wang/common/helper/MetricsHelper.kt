@@ -8,8 +8,10 @@ private fun Context.getDisplayMetrics(): DisplayMetrics {
     return resources.displayMetrics
 }
 
-fun Context.dp2px(dp: Float): Int {
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getDisplayMetrics()).toInt()
+fun Context?.dp2px(dp: Float): Int {
+    return this?.let {
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getDisplayMetrics()).toInt()
+    } ?: dp.toInt()
 }
 
 fun Context.getWidth(offset: Float = 0f, count: Int = 1): Int {
