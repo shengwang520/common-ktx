@@ -1,5 +1,6 @@
 package com.sheng.wang.common.helper
 
+import android.graphics.Point
 import android.util.Log
 import android.view.Window
 import androidx.core.view.ViewCompat
@@ -8,6 +9,14 @@ import androidx.core.view.WindowInsetsCompat.Type
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
+
+/**
+ * system bar height must use [registerSystemBarsHeight]
+ * * [Point] x is statusBar height, y is navigationBar height
+ * @see registerSystemBarsHeight
+ */
+val systemBarsHeight = MutableLiveData<Point>()
 
 /**
  * open full window
@@ -109,6 +118,15 @@ fun DialogFragment?.setSystemBarsColor(isStatusBar: Boolean = false, isNavigatio
 }
 
 /**
+ * register systemBars height
+ */
+fun FragmentActivity?.registerSystemBarsHeight() {
+    getSystemBarsHeight { top, bottom ->
+        systemBarsHeight.value = Point(top, bottom)
+    }
+}
+
+/**
  * get statusBar height,navigationBar height
  * * activity only one times
  * @param bloc return statusBar，navigation height
@@ -119,6 +137,7 @@ fun FragmentActivity?.getSystemBarsHeight(bloc: (Int, Int) -> Unit) {
             val statusBar = it.getInsets(Type.statusBars()).top
             val navigationBar = it.getInsets(Type.navigationBars()).bottom
             Log.d("App log", "fragmentActivity height getSystemBarsHeight: $statusBar |$navigationBar")
+            systemBarsHeight.value = Point(statusBar, navigationBar)
             bloc(statusBar, navigationBar)
         } ?: run {
             bloc(0, 0)

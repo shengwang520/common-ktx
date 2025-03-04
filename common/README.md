@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:common-ktx:1.0.04'
+* api 'com.github.shengwang520:common-ktx:1.0.05'
 
 ## Changelog
+
+### Version 1.0.05
+
+* 新增registerSystemBarsHeight方法获取状态栏高度，并保存为LiveData数据
 
 ### Version 1.0.04
 
