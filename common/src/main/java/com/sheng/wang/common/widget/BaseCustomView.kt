@@ -2,7 +2,10 @@ package com.sheng.wang.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import androidx.annotation.AnimRes
+import androidx.core.view.isVisible
 
 
 abstract class BaseCustomView @JvmOverloads constructor(
@@ -24,7 +27,7 @@ abstract class BaseCustomView @JvmOverloads constructor(
     }
 
     override val isShowing: Boolean
-        get() = visibility == VISIBLE
+        get() = isVisible
 
     override fun initListener() {
     }
@@ -39,6 +42,14 @@ abstract class BaseCustomView @JvmOverloads constructor(
 
 
     open fun destroy() {
+    }
+
+    /**
+     * 播放动画
+     */
+    open fun startAnim(@AnimRes animId: Int) {
+        val showAnim = AnimationUtils.loadAnimation(context, animId)
+        startAnimation(showAnim)
     }
 
     init {

@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:common-ktx:1.0.06'
+* api 'com.github.shengwang520:common-ktx:1.0.07'
 
 ## Changelog
+
+### Version 1.0.07
+
+* 移除自定义带生命周期的组件
 
 ### Version 1.0.06
 

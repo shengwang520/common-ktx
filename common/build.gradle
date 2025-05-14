@@ -11,7 +11,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.shengwang520'
                 artifactId = 'common-ktx'
-                version = "1.0.06"
+                version = "1.0.07"
             }
         }
     }
@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 35
-        versionCode 6
-        versionName "1.0.06"
+        versionCode 7
+        versionName "1.0.07"
     }
 
     compileOptions {
@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.core:core-ktx:1.16.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
 }
