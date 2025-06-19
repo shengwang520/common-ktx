@@ -6,8 +6,6 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.sheng.wang.common.permission.onPermissionDenied
-import com.sheng.wang.common.permission.onPermissionGranted
 import com.sheng.wang.common.permission.registerPermissionLaunch
 import com.sheng.wang.common.permission.registerPermissionsLaunch
 
@@ -26,12 +24,12 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * request one permission
      */
-    val permissionLauncher = registerPermissionLaunch({ onPermissionGranted?.get()?.invoke() }, { onPermissionDenied?.get()?.invoke() })
+    val permissionLauncher = registerPermissionLaunch()
 
     /**
      * request more permission
      */
-    val permissionsLauncher = registerPermissionsLaunch({ onPermissionGranted?.get()?.invoke() }, { onPermissionDenied?.get()?.invoke() })
+    val permissionsLauncher = registerPermissionsLaunch()
 
     /**
      * back button dispatcher

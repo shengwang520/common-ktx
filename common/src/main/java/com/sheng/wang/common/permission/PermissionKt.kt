@@ -19,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.sheng.wang.common.R
 import com.sheng.wang.common.base.BaseActivity
 import com.sheng.wang.common.helper.getNavigationBarHeight
-import java.lang.ref.WeakReference
 
 /**
  * camera permission
@@ -72,14 +71,14 @@ val POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 /**
  * permission onGranted
  */
-var onPermissionGranted: WeakReference<(() -> Unit)>? = null
+var onPermissionGranted: (() -> Unit)? = null
 
 /**
  * permission onDenied
  *
  * * return true intercept oneself achieve,false use default achieve
  */
-var onPermissionDenied: WeakReference<(() -> Boolean)>? = null
+var onPermissionDenied: (() -> Boolean)? = null
 
 
 /**
@@ -95,8 +94,8 @@ fun Context?.requestPermission(
 ) {
     this?.let {
         if (it is BaseActivity) {
-            onPermissionGranted = WeakReference(onGranted)
-            onPermissionDenied = WeakReference(onDenied)
+            onPermissionGranted = onGranted
+            onPermissionDenied = onDenied
             it.permissionLauncher.launch(permission)
         }
     }
@@ -115,8 +114,8 @@ fun Context?.requestPermissions(
 ) {
     this?.let {
         if (it is BaseActivity) {
-            onPermissionGranted = WeakReference(onGranted)
-            onPermissionDenied = WeakReference(onDenied)
+            onPermissionGranted = onGranted
+            onPermissionDenied = onDenied
             it.permissionsLauncher.launch(permissions)
         }
     }
@@ -124,46 +123,40 @@ fun Context?.requestPermissions(
 
 /**
  * request one permission
- * @param onGranted onGranted
- * @param onDenied onDenied
  */
-fun ActivityResultCaller.registerPermissionLaunch(
-    onGranted: () -> Unit,
-    onDenied: (() -> Boolean?)? = null
-): ActivityResultLauncher<String> {
-    val context = if (this is FragmentActivity) this else (this as? Fragment)?.activity
+fun ActivityResultCaller.registerPermissionLaunch(): ActivityResultLauncher<String> {
+    val context = this as? FragmentActivity ?: (this as? Fragment)?.activity
     return registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
         if (result) {
-            onGranted()
+            onPermissionGranted?.invoke()
+            onPermissionGranted = null
         } else {
-            onDenied?.invoke().let {
+            onPermissionDenied?.invoke().let {
                 if (it == null || it == false) {
                     context.showDeniedView()
                 }
             }
+            onPermissionDenied = null
         }
     }
 }
 
 /**
  * request more permission
- * @param onGranted onGranted
- * @param onDenied onDenied
  */
-fun ActivityResultCaller.registerPermissionsLaunch(
-    onGranted: () -> Unit,
-    onDenied: (() -> Boolean?)? = null
-): ActivityResultLauncher<Array<String>> {
-    val context = if (this is FragmentActivity) this else (this as? Fragment)?.activity
+fun ActivityResultCaller.registerPermissionsLaunch(): ActivityResultLauncher<Array<String>> {
+    val context = this as? FragmentActivity ?: (this as? Fragment)?.activity
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultMap ->
         if (resultMap.containsValue(false)) {
-            onDenied?.invoke().let {
+            onPermissionDenied?.invoke().let {
                 if (it == null || it == false) {
                     context.showDeniedView()
                 }
             }
+            onPermissionDenied = null
         } else {
-            onGranted()
+            onPermissionGranted?.invoke()
+            onPermissionGranted = null
         }
     }
 }

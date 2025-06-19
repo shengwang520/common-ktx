@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:common-ktx:1.0.07'
+* api 'com.github.shengwang520:common-ktx:1.0.08'
 
 ## Changelog
+
+### Version 1.0.08
+
+* 优化权限请求逻辑
 
 ### Version 1.0.07
 
